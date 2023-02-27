@@ -9,9 +9,8 @@ from .database import Base
 class FinancialData(Base):
     __tablename__ = 'financial_data'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    symbol = Column(String, nullable=False)
-    date = Column(Date, nullable=False)
+    symbol = Column(String, nullable=False, primary_key=True)
+    date = Column(Date, nullable=False, primary_key=True)
     open_price = Column(Numeric(10, 2), nullable=True)
     close_price = Column(Numeric(10, 2), nullable=True)
     volume = Column(Integer, nullable=True)

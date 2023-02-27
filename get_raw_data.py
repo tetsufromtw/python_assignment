@@ -43,7 +43,13 @@ def process_raw_data(symbol, raw_data):
 
 
 def save_financial_data(financial_data, session):
-    session.add_all(financial_data)
+    unique_data = []
+    for data in financial_data:
+        if session.query(models.FinancialData).filter_by(symbol=data.symbol, date=data.date).first():
+            print(f"There is a same data in DB, so ignore {data.date} {data.symbol}")
+            continue
+        unique_data.append(data)
+    session.add_all(unique_data)
     session.commit()
 
 

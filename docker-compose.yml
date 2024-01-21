@@ -10,30 +10,29 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
-      - 5432:5432
+      - 5431:5431
+
   app:
     build: .
     volumes:
       - .:/app
     depends_on:
       - db
+      - get_raw_data
     ports:
       - 8000:8000
     env_file:
       - .env
-    links:
-      - db
+
   get_raw_data:
-    build:
-      context: .
-      dockerfile: Dockerfile_get_raw_data
+    build: .
+    command: python ./get_raw_data.py
     volumes:
       - .:/app
     env_file:
       - .env
     depends_on:
       - db
-      - app
 
 
 volumes:
